@@ -12,11 +12,14 @@ public class MultiThreadedSolution extends Solution {
 		super(name, isStalling);
 		this.numThreads = numThreads;
 		this.isStalling = isStalling;
-		pool = new ThreadPool(numThreads, isStalling);
+		pool = new ThreadPool(numThreads, isStalling, this);
+		pool.run();
 	}
+	
+	
 
 	@Override
 	protected void feed(String item) {
-		
+		pool.feed(item);
 	}
 }
