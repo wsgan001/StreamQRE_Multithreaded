@@ -1,0 +1,15 @@
+num threads, num tests, Single Threaded Solution - duration - avg, is stalling, num items, Multi Threaded Solution - duration - avg, 
+8, 10, 196.4, yes, 2000000, 570.4, 
+
+
+Single Threaded Solution - duration, Multi Threaded Solution - duration, 
+231.0, 809.0, 
+186.0, 499.0, 
+196.0, 563.0, 
+191.0, 586.0, 
+186.0, 518.0, 
+189.0, 511.0, 
+210.0, 609.0, 
+200.0, 607.0, 
+185.0, 528.0, 
+190.0, 474.0, 

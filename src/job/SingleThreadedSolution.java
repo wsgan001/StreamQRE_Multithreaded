@@ -5,18 +5,27 @@ import util.MaxOcc;
 
 public class SingleThreadedSolution extends Solution {
 	
-	MaxOcc maxHelper = new MaxOcc();
+	MaxOcc maxHelper;
 	
-	public SingleThreadedSolution(String name, boolean isStalling) {
-		super(name, isStalling);
+	public SingleThreadedSolution(String name, int stallCount) {
+		super(name, stallCount);
+	}
+	
+	@Override
+	protected void prepare() {
+		maxHelper = new MaxOcc();
 	}
 	
 	@Override
 	protected void feed(String item) {
-		maxHelper.add(item, isStalling);
-		if (item.equals("done")) {
-			KeyValue result = maxHelper.getMax();
-			this.done(result);
-		}
+		maxHelper.add(item, stallCount);
+	}
+	
+	@Override
+	protected KeyValue process() {
+		KeyValue result = maxHelper.getMax();
+		return result;
 	}
 }
+
+

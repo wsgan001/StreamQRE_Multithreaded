@@ -7,30 +7,43 @@ import util.KeyValue;
 
 public class Solution {
 	String name;
-	boolean isStalling;
+	int stallCount;
 	long startTime;
 	long endTime;
 	
-	public Solution(String name, boolean isStalling) {
+	public Solution(String name, int stallCount) {
 		this.name = name;
-		this.isStalling = isStalling;
+		this.stallCount = stallCount;
 	}
 	
-	public void solve(Queue<String> buffer) {
+	public String getName() {
+		return this.name;
+	}
+	
+	public KeyValue solve(Queue<String> buffer) {
 		startTime = System.currentTimeMillis();
+		prepare();
 		while(!buffer.isEmpty()) {
 			this.feed(buffer.poll());
 		}
+		KeyValue result = this.process();
+		this.done();
+		return result;
+	}
+	
+	protected KeyValue process() {
+		return null;
+	}
+	
+	protected void prepare() {
+
 	}
 	
 	protected void feed(String item) {
 	}
 	
-	public void done(KeyValue result) {
+	public void done() {
 		endTime = System.currentTimeMillis();
-		System.out.println(this.name + " - Took: " + (endTime - startTime) + " ms.");
-		System.out.print("Result: ");
-		result.print();
 	}
 	
 	public long getDuration() {

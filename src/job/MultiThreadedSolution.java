@@ -3,23 +3,31 @@ package job;
 import java.util.Queue;
 
 import threads.ThreadPool;
+import util.KeyValue;
 
 public class MultiThreadedSolution extends Solution {
 	int numThreads;
-	boolean isStalling;
+	int stallCount;
 	ThreadPool pool;
-	public MultiThreadedSolution(String name, boolean isStalling, int numThreads) {
-		super(name, isStalling);
+	public MultiThreadedSolution(String name, int stallCount, int numThreads) {
+		super(name, stallCount);
 		this.numThreads = numThreads;
-		this.isStalling = isStalling;
-		pool = new ThreadPool(numThreads, isStalling, this);
-		pool.run();
+		this.stallCount = stallCount;
 	}
 	
-	
+	@Override
+	protected void prepare() {
+		pool = new ThreadPool(numThreads, stallCount, this);
+	}
 
 	@Override
 	protected void feed(String item) {
 		pool.feed(item);
+	}
+	
+	@Override
+	protected KeyValue process() {
+		KeyValue result = pool.run();
+		return result;
 	}
 }

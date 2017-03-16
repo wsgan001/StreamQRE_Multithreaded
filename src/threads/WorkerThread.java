@@ -12,14 +12,14 @@ public class WorkerThread extends Thread {
 	private boolean isRunning;
 	private int curIndex = 0;
 	private MaxOcc maxHelper;
-	private boolean isStalling;
+	private int stallCount;
 	private ThreadPool threadPool;
 	
-	public WorkerThread(int threadNo, int numThreads, ArrayList<String> tokens, boolean isStalling, ThreadPool threadPool) {
+	public WorkerThread(int threadNo, int numThreads, ArrayList<String> tokens, int stallCount, ThreadPool threadPool) {
 		this.threadNo = threadNo;
 		this.numThreads = numThreads;
 		this.tokens = tokens;
-		this.isStalling = isStalling;
+		this.stallCount = stallCount;
 		this.isRunning = true;
 		this.maxHelper = new MaxOcc();
 		this.threadPool = threadPool;
@@ -34,29 +34,24 @@ public class WorkerThread extends Thread {
 	public void process(String token) {
 		int adjustedHash = getAdjustedHash(token);
 		if (adjustedHash == this.threadNo) {
-			this.maxHelper.add(token, isStalling);
+			this.maxHelper.add(token, stallCount);
 		}
 	}
 	
 	public void run() {
-//		System.out.println("Running: " + threadNo);
 		while(this.isRunning) {
-			try {
-				if (curIndex < tokens.size()) {
-					String curString = tokens.get(curIndex);
-					if (curString.equals("done")) {
-						KeyValue result = this.maxHelper.getMax();
-						this.threadPool.addToAggregator(result);
-						this.isRunning = false;
-						break;
-					}
-					process(curString);
-					curIndex++;
+			String curString = "not yet";
+			if (curIndex < tokens.size()) {
+				curString = tokens.get(curIndex);
+				if (curString.equals("done")) {
+					KeyValue result = this.maxHelper.getMax();
+					this.threadPool.addToAggregator(result);
+					this.isRunning = false;
+					break;
 				}
-			} catch(Exception e) {
-				
+				process(curString);
+				curIndex++;
 			}
-			
 		}
 	}
 	
