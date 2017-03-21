@@ -5,14 +5,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import results.Result;
+import util.Stream;
 
 public class Main {
     static int strLength = 2;
     static long seed = 1001L;
-	static long NUM_ITEMS = 1000;
+	static long NUM_ITEMS = 1_000_000;
 	static int NUM_THREADS = 8;
-	static int NUM_TESTS = 5;
-	static int STALL_COUNT = 0;
+	static int NUM_TESTS = 100;
+	static int STALL_COUNT = 5;
 	static boolean IS_TESTING_SINGLE_THREAD = true;
 	static boolean IS_TESTING_MULTI_THREAD = true;
 	

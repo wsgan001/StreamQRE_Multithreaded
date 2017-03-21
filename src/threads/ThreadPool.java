@@ -1,29 +1,33 @@
 package threads;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import job.MultiThreadedSolution;
 import util.KeyValue;
+import util.TokensBuffer;
 
 public class ThreadPool {
 	
+	private static final int BUFFER_BLOCK_SIZE = 1024;
+	
 	int size;
-	ArrayList<String> items;
 	int stallCount;
 	WorkerThread[] threads;
 	ArrayList<KeyValue> aggregator;
 	MultiThreadedSolution sol;
 	
 	KeyValue curResult = new KeyValue("placeholder", -1000);
-	
+	TokensBuffer buffer = new TokensBuffer(BUFFER_BLOCK_SIZE);
 	public ThreadPool(int size, int stallCount, MultiThreadedSolution sol) {
 		this.size = size;
-		this.items = new ArrayList<String>();
 		this.stallCount = stallCount;
 		this.threads = new WorkerThread[size];
 		this.aggregator = new ArrayList<KeyValue>();
 		this.sol = sol;
 		for (int i = 0; i < size; i++) {
-			threads[i] = new WorkerThread(i, size, items, stallCount, this);
+			threads[i] = new WorkerThread(i, size, stallCount, buffer, this);
 		}
 	}
 	
@@ -56,7 +60,7 @@ public class ThreadPool {
 	}
 	
 	public void feed(String item) {
-		items.add(item);
+		buffer.add(item);
 	}
 	
 	
