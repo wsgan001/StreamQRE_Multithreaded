@@ -25,6 +25,7 @@ public class WorkerThread extends Thread {
 		this.threadPool = threadPool;
 	}
 	
+	// (hash of token) % (number of threads)
 	public int getAdjustedHash(String token) {
 		int hashCode = token.hashCode();
 		int adjustedHash = hashCode % numThreads;

@@ -1,8 +1,5 @@
 package job;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 import util.KeyValue;
 
 public class Solution {
@@ -20,11 +17,11 @@ public class Solution {
 		return this.name;
 	}
 	
-	public KeyValue solve(Queue<String> buffer) {
+	public KeyValue solve(Stream stream) {
 		startTime = System.currentTimeMillis();
 		prepare();
-		while(!buffer.isEmpty()) {
-			this.feed(buffer.poll());
+		while (stream.hasNext()) {
+			this.feed(stream.next());
 		}
 		KeyValue result = this.process();
 		this.done();

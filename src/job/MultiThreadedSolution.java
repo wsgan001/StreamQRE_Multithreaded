@@ -1,7 +1,5 @@
 package job;
 
-import java.util.Queue;
-
 import threads.ThreadPool;
 import util.KeyValue;
 

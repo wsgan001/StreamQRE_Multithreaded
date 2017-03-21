@@ -1,12 +1,8 @@
 package threads;
 
 import java.util.ArrayList;
-import java.util.Queue;
-
 import job.MultiThreadedSolution;
-import util.Hasher;
 import util.KeyValue;
-import util.MaxOcc;
 
 public class ThreadPool {
 	
@@ -16,7 +12,6 @@ public class ThreadPool {
 	WorkerThread[] threads;
 	ArrayList<KeyValue> aggregator;
 	MultiThreadedSolution sol;
-	
 	
 	KeyValue curResult = new KeyValue("placeholder", -1000);
 	
